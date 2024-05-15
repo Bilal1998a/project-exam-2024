@@ -1,4 +1,6 @@
+// Venues.jsx
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Venues = () => {
@@ -11,7 +13,6 @@ const Venues = () => {
     const fetchVenues = async () => {
       try {
         const response = await axios.get('https://v2.api.noroff.dev/holidaze/venues');
-        console.log(response.data.data); // Log the fetched data
         setVenues(response.data.data);
         setLoading(false);
       } catch (error) {
@@ -58,7 +59,9 @@ const Venues = () => {
                   <span key={index} className="inline-block text-yellow-500">&#9733;</span>
                 ))}
               </div>
-              <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Book Now</button>
+              <Link to={`/venues/${venue.id}`} className="block">
+                <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600">View Details</button>
+              </Link>
             </div>
           </div>
         ))}
