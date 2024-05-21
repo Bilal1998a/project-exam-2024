@@ -1,14 +1,13 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client'; // Import createRoot from react-dom/client
-
 import './index.css';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Layout } from './layout/Layout.jsx';
-import Home from './components/Home/Home.jsx';
-import Venues from './components/Venues/Venues.jsx';
-import ProfilePage from './components/Profilepage.jsx';
-import Register from './components/Register.jsx';
-import VenueInfo from './components/Venueinfo.jsx'; // Import VenueInfo component
+import { Layout } from './layout/Layout';
+import Home from './components/Home/Home';
+import Venues from './components/Venues/Venues';
+import ProfilePage from './components/Profilepage';
+import Register from './components/Register';
+import VenueInfo from './components/Venueinfo';
 
 const router = createBrowserRouter([
   {
@@ -24,22 +23,21 @@ const router = createBrowserRouter([
       },
       {
         path: '/profilepage',
-        element: <ProfilePage/>
+        element: <ProfilePage />
       },
       {
         path: '/register',
-        element: <Register/>
+        element: <Register />
       },
-      // Route for VenueInfo component
       {
-        path: '/venues/:id', // Use dynamic parameter to get venue ID
+        path: '/venues/:id',
         element: <VenueInfo />
       }
     ]
   }
 ]);
 
-createRoot(document.getElementById('root')).render( // Use createRoot instead of ReactDOM.createRoot
+createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <RouterProvider router={router} />
   </React.StrictMode>

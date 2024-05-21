@@ -7,12 +7,8 @@ const Login = ({ onLogin }) => {
 
     const handleLogin = async () => {
         try {
-            // Perform login logic
-            // If login successful, call the onLogin function and redirect to homepage
-            await onLogin(); // Ensure onLogin is called as a function
-            console.log('Login successful');
-            // Redirect to homepage
-            window.location.href = '/'; // Change the URL to the homepage
+            // Perform login logic within the onLogin function
+            await onLogin(email, password); // Pass email and password to onLogin
         } catch (error) {
             // Handle login error
             setLoginError(error.message || 'Login failed');
