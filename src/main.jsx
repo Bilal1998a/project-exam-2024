@@ -7,7 +7,9 @@ import Home from './components/Home/Home';
 import Venues from './components/Venues/Venues';
 import ProfilePage from './components/Profilepage';
 import Register from './components/Register';
+import Login from './components/Login';
 import VenueInfo from './components/Venueinfo';
+import { AuthProvider } from './components/AuthContext';
 
 const router = createBrowserRouter([
   {
@@ -30,6 +32,10 @@ const router = createBrowserRouter([
         element: <Register />
       },
       {
+        path: '/login',
+        element: <Login />
+      },
+      {
         path: '/venues/:id',
         element: <VenueInfo />
       }
@@ -39,6 +45,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>
 );
