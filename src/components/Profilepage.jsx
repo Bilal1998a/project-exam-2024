@@ -3,7 +3,7 @@ import axios from 'axios';
 import { AuthContext } from './AuthContext';
 
 const ProfilePage = () => {
-    const { isLoggedIn, username } = useContext(AuthContext);
+    const { isLoggedIn, username, apiKey } = useContext(AuthContext);
     const [profile, setProfile] = useState(null);
     const [error, setError] = useState(null);
 
@@ -12,12 +12,15 @@ const ProfilePage = () => {
             const fetchProfile = async () => {
                 try {
                     const authToken = localStorage.getItem('authToken');
+
                     console.log('Fetching profile for:', username);
                     console.log('Auth Token:', authToken);
+                    console.log('API Key:', apiKey);
 
                     const response = await axios.get(`https://v2.api.noroff.dev/holidaze/profiles/${username}?_bookings=true`, {
                         headers: {
-                            Authorization: `Bearer ${authToken}`
+                            Authorization: `Bearer ${authToken}`,
+                            'X-Noroff-API-Key': apiKey
                         }
                     });
 
@@ -25,13 +28,13 @@ const ProfilePage = () => {
                     setProfile(response.data.data);
                 } catch (error) {
                     console.error('Error fetching profile:', error);
-                    setError(error.response?.data || 'Failed to fetch profile data');
+                    setError(error.response ? error.response.data : error.message || 'Failed to fetch profile data');
                 }
             };
 
             fetchProfile();
         }
-    }, [isLoggedIn, username]);
+    }, [isLoggedIn, username, apiKey]);
 
     if (!isLoggedIn) return <p>Please log in to view your profile.</p>;
     if (error) return <p>Error: {JSON.stringify(error)}</p>;
@@ -46,6 +49,7 @@ const ProfilePage = () => {
                     )}
                     <h2 className="text-2xl font-bold">{profile.name}</h2>
                 </div>
+                <p className="mt-4">{profile.email}</p>
                 <h3 className="text-xl font-semibold mt-6">My Bookings</h3>
                 {profile.bookings && profile.bookings.length > 0 ? (
                     <ul>

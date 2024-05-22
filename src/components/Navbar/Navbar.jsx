@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaUserCircle } from 'react-icons/fa';
 import { AuthContext } from '../AuthContext';
@@ -17,11 +17,6 @@ const Navbar = () => {
         navigate(path);
     };
 
-    const handleLogout = () => {
-        logout();
-        closeDropdownAndNavigate('/');
-    };
-
     return (
         <nav className="bg-blue-500 p-4">
             <div className="container mx-auto flex items-center justify-between">
@@ -30,8 +25,8 @@ const Navbar = () => {
                     <Link to="/" className="text-white px-3 py-2 rounded-md text-lg font-medium">Home</Link>
                     <Link to="/venues" className="text-white px-3 py-2 rounded-md text-lg font-medium">Venues</Link>
                     <div className="relative">
-                        <button
-                            className="flex items-center text-white px-3 py-2 rounded-md text-lg font-medium focus:outline-none"
+                        <button 
+                            className="flex items-center text-white px-3 py-2 rounded-md text-lg font-medium focus:outline-none" 
                             onClick={toggleDropdown}
                         >
                             <FaUserCircle className="mr-2" />
@@ -52,7 +47,7 @@ const Navbar = () => {
                                         <Link to="/profilepage" onClick={() => closeDropdownAndNavigate('/profilepage')}>Profile</Link>
                                     </li>
                                     <li className="px-4 py-2 hover:bg-blue-600">
-                                        <button onClick={handleLogout}>Log Out</button>
+                                        <button onClick={() => { logout(); closeDropdownAndNavigate('/'); }}>Log Out</button>
                                     </li>
                                 </>
                             )}

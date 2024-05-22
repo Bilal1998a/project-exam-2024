@@ -13,15 +13,22 @@ const Login = () => {
     const handleLogin = async () => {
         try {
             const response = await axios.post('https://v2.api.noroff.dev/auth/login', { email, password });
-            const userData = response.data.data;
+            const userData = response.data;
 
-            localStorage.setItem('username', userData.name);
-            localStorage.setItem('authToken', userData.accessToken);
+            localStorage.setItem('authToken', userData.data.accessToken);
 
-            login(userData.name);
+            // Generate API key
+            const apiKeyResponse = await axios.post('https://v2.api.noroff.dev/auth/create-api-key', {}, {
+                headers: {
+                    Authorization: `Bearer ${userData.data.accessToken}`
+                }
+            });
+            const apiKey = apiKeyResponse.data.data.key;
+
+            login(userData.data.name, apiKey);
             navigate('/profilepage');
         } catch (error) {
-            setLoginError(error.response?.data?.errors[0]?.message || 'Login failed');
+            setLoginError(error.message || 'Login failed');
         }
     };
 
