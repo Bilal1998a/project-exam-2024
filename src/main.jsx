@@ -11,6 +11,7 @@ import Login from './components/Login';
 import VenueInfo from './components/Venueinfo';
 import CreateVenue from './components/CreateVenue';
 import ManageVenues from './components/ManagVenue';
+import UpdateVenue from './components/UpdateVenue';
 import { AuthProvider } from './components/AuthContext';
 
 const router = createBrowserRouter([
@@ -19,38 +20,42 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Home />
+        element: <Home />,
       },
       {
         path: '/venues',
-        element: <Venues />
+        element: <Venues />,
       },
       {
         path: '/profilepage',
-        element: <ProfilePage />
+        element: <ProfilePage />,
       },
       {
         path: '/register',
-        element: <Register />
+        element: <Register />,
       },
       {
         path: '/login',
-        element: <Login />
+        element: <Login />,
       },
       {
         path: '/venues/:id',
-        element: <VenueInfo />
+        element: <VenueInfo />,
       },
       {
         path: '/createvenue',
-        element: <CreateVenue />
+        element: <CreateVenue />,
       },
       {
         path: '/managevenues',
-        element: <ManageVenues />
-      }
-    ]
-  }
+        element: <ManageVenues />,
+      },
+      {
+        path: '/updatevenue/:id',
+        element: <UpdateVenue />,
+      },
+    ],
+  },
 ]);
 
 createRoot(document.getElementById('root')).render(

@@ -62,7 +62,7 @@ const VenueInfo = () => {
       }
     } catch (error) {
       console.error('Error making booking:', error);
-      setError(error.response ? error.response.data : error.message || 'Failed to make booking');
+      setError(error.response?.data?.errors?.[0]?.message || error.message || 'Failed to make booking');
     }
   };
 
@@ -71,7 +71,7 @@ const VenueInfo = () => {
   if (!venue) return <p>No venue found</p>;
 
   return (
-    <div className="container mx-auto mt-10">
+    <div className="container mx-auto mt-10 mb-20"> {/* Added margin bottom */}
       <div className="bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-2xl font-bold">{venue.name}</h2>
         <img src={venue.media[0]?.url} alt={venue.media[0]?.alt} className="w-full h-64 object-cover mt-4 rounded-lg" />
@@ -115,6 +115,7 @@ const VenueInfo = () => {
           <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
             Book Now
           </button>
+          {error && <p className="text-red-500 mt-4">{error}</p>}
         </form>
       </div>
     </div>

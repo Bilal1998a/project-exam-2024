@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from './AuthContext';
 import axios from 'axios';
+import { AuthContext } from './AuthContext';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -15,17 +15,18 @@ const Login = () => {
             const response = await axios.post('https://v2.api.noroff.dev/auth/login', { email, password });
             const userData = response.data;
 
-            localStorage.setItem('authToken', userData.data.accessToken);
+            const authToken = userData.data.accessToken;
+            localStorage.setItem('authToken', authToken);
 
-            // Generate API key
+           
             const apiKeyResponse = await axios.post('https://v2.api.noroff.dev/auth/create-api-key', {}, {
                 headers: {
-                    Authorization: `Bearer ${userData.data.accessToken}`
+                    Authorization: `Bearer ${authToken}`
                 }
             });
             const apiKey = apiKeyResponse.data.data.key;
 
-            login(userData.data.name, apiKey);
+            login(userData.data.name, apiKey, authToken);
             navigate('/profilepage');
         } catch (error) {
             setLoginError(error.message || 'Login failed');

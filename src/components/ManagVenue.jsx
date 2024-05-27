@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from './AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const ManageVenues = () => {
     const { username, authToken, apiKey } = useContext(AuthContext);
     const [venues, setVenues] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchVenues = async () => {
@@ -62,7 +64,7 @@ const ManageVenues = () => {
                                 Delete
                             </button>
                             <button 
-                                onClick={() => navigate(`/update-venue/${venue.id}`)} 
+                                onClick={() => navigate(`/updatevenue/${venue.id}`)} 
                                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-4 ml-2"
                             >
                                 Update
