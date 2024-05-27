@@ -1,10 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaUserCircle } from 'react-icons/fa';
 import { AuthContext } from '../AuthContext';
 
 const Navbar = () => {
-    const { isLoggedIn, logout } = useContext(AuthContext);
+    const { isLoggedIn, username, logout, apiKey } = useContext(AuthContext);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const navigate = useNavigate();
 
@@ -47,8 +47,13 @@ const Navbar = () => {
                                         <Link to="/profilepage" onClick={() => closeDropdownAndNavigate('/profilepage')}>Profile</Link>
                                     </li>
                                     <li className="px-4 py-2 hover:bg-blue-600">
-                                        <button onClick={() => { logout(); closeDropdownAndNavigate('/'); }}>Log Out</button>
+                                        <button onClick={() => { closeDropdownAndNavigate('/'); logout(); }}>Log Out</button>
                                     </li>
+                                    {apiKey && (
+                                        <li className="px-4 py-2 hover:bg-blue-600">
+                                            <Link to="/createvenue" onClick={() => closeDropdownAndNavigate('/create-venue')}>Create Venue</Link>
+                                        </li>
+                                    )}
                                 </>
                             )}
                         </ul>

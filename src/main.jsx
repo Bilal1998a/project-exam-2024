@@ -9,6 +9,8 @@ import ProfilePage from './components/Profilepage';
 import Register from './components/Register';
 import Login from './components/Login';
 import VenueInfo from './components/Venueinfo';
+import CreateVenue from './components/CreateVenue';
+import ManageVenues from './components/ManagVenue';
 import { AuthProvider } from './components/AuthContext';
 
 const router = createBrowserRouter([
@@ -38,6 +40,14 @@ const router = createBrowserRouter([
       {
         path: '/venues/:id',
         element: <VenueInfo />
+      },
+      {
+        path: '/createvenue',
+        element: <CreateVenue />
+      },
+      {
+        path: '/managevenues',
+        element: <ManageVenues />
       }
     ]
   }

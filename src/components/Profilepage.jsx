@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from './AuthContext';
 
@@ -6,16 +7,13 @@ const ProfilePage = () => {
     const { isLoggedIn, username, apiKey } = useContext(AuthContext);
     const [profile, setProfile] = useState(null);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (isLoggedIn && username) {
             const fetchProfile = async () => {
                 try {
                     const authToken = localStorage.getItem('authToken');
-
-                    console.log('Fetching profile for:', username);
-                    console.log('Auth Token:', authToken);
-                    console.log('API Key:', apiKey);
 
                     const response = await axios.get(`https://v2.api.noroff.dev/holidaze/profiles/${username}?_bookings=true`, {
                         headers: {
@@ -24,10 +22,8 @@ const ProfilePage = () => {
                         }
                     });
 
-                    console.log('Profile response:', response.data);
                     setProfile(response.data.data);
                 } catch (error) {
-                    console.error('Error fetching profile:', error);
                     setError(error.response ? error.response.data : error.message || 'Failed to fetch profile data');
                 }
             };
@@ -64,6 +60,22 @@ const ProfilePage = () => {
                     </ul>
                 ) : (
                     <p>No bookings found.</p>
+                )}
+                {profile.venueManager && (
+                    <div className="mt-6">
+                        <button
+                            onClick={() => navigate('/createvenue')}
+                            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 mr-2"
+                        >
+                            Create Venue
+                        </button>
+                        <button
+                            onClick={() => navigate('/managevenues')}
+                            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                        >
+                            Manage Venues
+                        </button>
+                    </div>
                 )}
             </div>
         </div>
